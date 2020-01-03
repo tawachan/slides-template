@@ -1,23 +1,23 @@
 {
   "name": "slides-template",
-  "version": "1.0.0",
   "description": "a template page publishing slides using marp",
+  "version": "1.0.0",
+  "author": "Yusuke Otawa <otawa.yusuke@gmail.com>",
   "dependencies": {
     "firebase-tools": "^7.11.0"
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^0.16.2"
   },
+  "license": "MIT",
+  "repository": "git@github.com:tawachan/slides-template.git",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "convert": "marp -o published -I base --allow-local-files",
+    "deploy": "yarn export && firebase deploy",
+    "export": "yarn convert && yarn image",
+    "image": "marp --image jpeg ./base && rsync -av --include='*.jpg' --include='*/' --exclude='*' ./base/ ./published",
     "preview": "marp -p",
     "serve": "marp -s -I base",
-    "image": "marp --image jpeg ./base && rsync -av --include='*.jpg' --include='*/' --exclude='*' ./base/ ./published",
-    "convert": "marp -o published -I base --allow-local-files",
-    "export": "yarn convert && yarn image",
-    "deploy": "yarn export && firebase deploy"
-  },
-  "author": "Yusuke Otawa <otawa.yusuke@gmail.com>",
-  "license": "ISC",
-  "repository": "git@github.com:tawachan/slides-template.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
